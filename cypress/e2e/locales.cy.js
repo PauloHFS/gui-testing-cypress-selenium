@@ -4,27 +4,24 @@ describe('locales', () => {
     cy.get('[id="_username"]').type('sylius');
     cy.get('[id="_password"]').type('sylius');
     cy.get('.primary').click();
+    cy.visit('/admin/locales/');
   });
-  // Remove .only and implement others test cases!
-  it.only('validate filters bar with contains value', () => {
-    // Click in locales in side menu
-    cy.clickInFirst('a[href="/admin/locales/"]');
-    // Type in value input to search for specify locale
-    cy.get('[id="criteria_code_value"]').type('en');
-    // Click in filter blue button
-    cy.get('*[class^="ui blue labeled icon button"]').click();
-    // Click in edit of the last locale
-    cy.get('*[class^="ui labeled icon button "]').last().click();
+  it('check create flow', () => {
+    // Click in create locale button
+    cy.get('div.right:nth-child(1)').click();
+    
+    cy.get('#sylius_locale_code').select('bm_ML');
 
-    // Assert that locale is English (United States)
-    cy.get('body').should('contain', 'English (United States)');
-  });
-  it('test case 2', () => {
-    // Implement your test case 2 code here
-  });
-  it('test case 3', () => {
-    // Implement your test case 3 code here
-  });
+    cy.get('button.ui').click();
 
-  // Implement the remaining test cases in a similar manner
+    // check if the new locale is in the table
+    cy.get('td').should('contain', 'Bambara (Mali)');
+  });
+  it('check delete locale', () => {
+    
+    cy.get('.item:nth-child(1) > td > .ui > form > .ui').click()
+ 
+    cy.get('.dimmable > .ui > #confirmation-modal > .actions > #confirmation-button').click()
+ 
+  });
 });
